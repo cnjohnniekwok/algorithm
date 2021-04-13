@@ -1,0 +1,130 @@
+//======================================================|
+//                      Merge SORT O(nlogn)
+// split array into smaller ones, merge them back while
+// sorting them in order.
+//------------------------------------------------------|
+function merge(a1,a2){
+    let a = [];
+    let i = 0;
+    let j = 0;
+
+    while(i <= a1.length-1 && j <= a2.length-1){
+        if(a1[i] < a2[j]){
+            a.push(a1[i]);
+            i++;
+        }
+        else{
+            a.push(a2[j]);
+            j++;
+        }
+    }
+
+    while(i <= a1.length-1){
+        a.push(a1[i]);
+        i++;
+    }
+
+    while(j <= a2.length-1){
+        a.push(a2[j]);
+        j++;
+    }
+    return a;
+}
+
+function mergeSort(a){
+    if(a.length <= 1) return a;
+    let m = Math.floor(a.length/2);
+    let l = mergeSort(a.slice(0,m));
+    let r = mergeSort(a.slice(m));
+    return merge(l,r);
+}
+
+//======================================================|
+//                      QUICK SORT O(nlogn)
+// push elements lesser to the left, larger to the right
+// Everything happens in the same array.
+//------------------------------------------------------|
+function pivot(a, l, r){
+    let p = a[l]; //using start at all time. make it random?
+    let s = l;
+
+    for(var i = l + 1; i <= r; i++){
+        if(p > a[i]){
+            s++;
+            [a[i],a[s]] = [a[s],a[i]]
+        }
+    }
+    [a[s],a[l]] = [a[l],a[s]]
+    return s;
+}
+
+function quickSort(a, s = 0, e = a.length-1){
+    if(s < e){
+        let p = pivot(a,s,e);
+        quickSort(a,s,p-1);
+        quickSort(a,p+1,e);
+    }
+    return a;
+}
+
+//======================================================|
+//                   INSERTION SORT O(n^2)
+// each element, make space as long as element is greater
+// stop and store the element at the last space created.
+//------------------------------------------------------|
+function insertionSort(a){
+    for(var i = 0; i < a.length-1; i++){
+        let c = a[i];
+        for(var j = i-1; j >= 0 && c < a[j]; j--){
+            a[j+1] = a[j]
+        }
+        a[j+1] = c;
+    }
+    return a;
+}
+
+//======================================================|
+//                   SELECTION SORT O(n^2)
+// search for lowest elements and swap with font elements
+//------------------------------------------------------|
+function selectionSort(a){
+    for(var i = 0; i < a.length-1; i++){    // i++, j=i+1 : a.length-1
+        let l = i;
+        for(var j = i+1; j < a.length-1; j++){
+            if(a[l] > a[j]){
+                l = j;
+            }
+        }
+        [a[i],a[l]] = [a[l],a[i]]
+    }
+    return a;
+}
+
+//======================================================|
+//                    BUBBLE SORT O(n^2)
+// swaping larger elements thorugh the array to the back
+//------------------------------------------------------|
+function bubbleSort(a){
+    
+    let noSwap = true;
+    for(var i = a.length-1; i >= 0; i--){   // i--, j=0 : i-1
+        for(var j = 0; j <= i-1; j++){
+            if(a[j] > a[j+1]){
+                [a[j],a[j+1]] = [a[j+1],a[j]];
+                noSwap = false;
+            }
+        }
+        if(noSwap){
+            return a;
+        }
+    }
+    return a;
+}
+
+arrUnsortInt = [19,18,117,16,15,14,123,12,11,10,9,8,7,6,5,4,3,2,1];
+console.log("/* INT SORTING*/")
+console.log(`Array sorted with bubbleSort    : ${bubbleSort(arrUnsortInt)}`);
+console.log(`Array sorted with insertionSort : ${insertionSort(arrUnsortInt)}`);
+console.log(`Array sorted with selectionSort : ${selectionSort(arrUnsortInt)}`);
+console.log(`Array sorted with mergeSort     : ${mergeSort(arrUnsortInt)}`);
+console.log(`Array sorted with quickSort     : ${quickSort(arrUnsortInt)}`);

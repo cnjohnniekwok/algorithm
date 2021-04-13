@@ -1,0 +1,38 @@
+function isSubsequence(str1, str2) {
+  // good luck. Add any arguments you deem necessary.
+
+  // pt1 at start of str1
+  // pt2 at start of str2
+  let pt1 = 0
+  let pt2 = 0
+  let str1Len = str1.length
+  let str2Len = str2.length
+
+  //for each char at str2:
+  for(pt2; pt2 <= str2Len; pt2++){
+      //if str[pt1] == str[pt2], both pointers ++
+      if(str1[pt1] === str2[pt2]){
+          //if pt1 === str1 len -1 return true
+          if(pt1 === (str1Len - 1)){
+              return true;
+          } else{
+            pt1++;
+          }
+      }
+
+      //else pt2 ++
+
+
+
+  }
+
+ 
+  //if no return true at all, return false.
+  return false;
+}
+
+
+console.log(isSubsequence("hello","hello world"));
+console.log(isSubsequence("ting","sting"));
+console.log(isSubsequence("abc","abracadabra"));
+console.log(isSubsequence("abc","acb"));

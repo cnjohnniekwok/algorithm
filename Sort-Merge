@@ -1,0 +1,63 @@
+// "Split all the way down, and merge it all the way up"
+//T:O(n logn) S: O(n)
+function merge(arr1, arr2){
+    let arr = [];
+    let pt1 = 0;
+    let pt2 = 0;
+
+    while(pt1 < arr1.length && pt2 < arr2.length){
+        if(arr1[pt1] < arr2[pt2]){
+            arr.push(arr1[pt1])
+            pt1++
+        }
+        else{
+            arr.push(arr2[pt2])
+            pt2++
+        }
+    }
+
+    while(pt1 < arr1.length){
+        arr.push(arr1[pt1])
+        pt1++
+    }
+
+    while(pt2 < arr2.length){
+        arr.push(arr2[pt2])
+        pt2++
+    }
+
+    return arr;
+}
+
+function mergeSort(arr){
+    if(arr.length <= 1) return arr;
+    let mid = Math.floor(arr.length/2);
+    let left = mergeSort(arr.slice(0,mid));
+    let right = mergeSort(arr.slice(mid));
+    return merge(left,right);
+}
+
+
+arrUnsortInt = [9,8,7,6,13,15,17,11,19,11,12,15,5,4,3,2,1];
+arrUnsortString = ["z","s","b","a","c","h","o","p","n","c","a","q","f","j","l","k"];
+arrUnsortFloat = [9.2,8.3,7.5,6,13.12,15.3,17.1,11.36,11.57,12.47,15.89,5.11,4.3,3.2,2,1];
+
+function sortfunc(num1,num2){
+    return num1 - num2;
+}
+
+
+console.log("/* INT SORTING*/")
+console.log(`Array sorted with mergeSort       : ${mergeSort(arrUnsortInt)}`);
+console.log(`Array sorted without sort function: ${arrUnsortInt.sort()}`);
+console.log(`Array sorted with sort function   : ${arrUnsortInt.sort(sortfunc)}`);
+
+console.log("/* FLOAT SORTING*/")
+console.log(`Array sorted with mergeSort       : ${mergeSort(arrUnsortFloat)}`);
+console.log(`Array sorted without sort function: ${arrUnsortFloat.sort()}`);
+console.log(`Array sorted with sort function   : ${arrUnsortFloat.sort(sortfunc)}`);
+
+console.log("/* STRING SORTING*/")
+console.log(`Array sorted with mergeSort       : ${mergeSort(arrUnsortString)}`);
+console.log(`Array sorted without sort function: ${arrUnsortString.sort()}`);
+console.log(`Array sorted with sort function   : ${arrUnsortString.sort(sortfunc)}`);

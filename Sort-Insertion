@@ -1,0 +1,86 @@
+//O(n^2)
+/*
+function insertion(arr){ //for-While
+    let arrLen = arr.length;
+    for(var i = 1; i < arrLen; i++){ // compare currentVal with: 
+        let currentVal = arr[i] //save compare value.
+        
+        var j = i-1;
+        while( j > -1 && arr[j] > currentVal){
+            //console.log(j)
+            arr[j+1] = arr[j] //make space.
+            j--;        
+        }
+        arr[j+1] = currentVal;
+        //console.log(`-> ${j+1}`)
+    }
+
+    return arr;
+} 
+*/
+
+
+function insertion(arr){ //for-for
+    let arrLen = arr.length;
+    for(var i = 1; i < arrLen; i++){
+        let currentVal = arr[i];
+        for(var j = i-1; j > -1; j--){
+            if(arr[j] > currentVal){
+                arr[j+1] = arr[j]
+            }
+            else{
+                break;
+            }
+        }
+        arr[j+1] = currentVal;
+    }
+
+    return arr;
+}
+
+
+/*
+function insertion(arr){ //while-while
+    let arrLen = arr.length;
+
+    let i = 1;
+    while(i < arrLen){
+
+        let j = i-1;
+        let currentVal = arr[i];
+        while(j > -1 && arr[j] > currentVal){
+           arr[j+1] = arr[j];
+           j--
+        }
+        arr[j+1] = currentVal;
+        i++;
+    }
+
+    return arr;
+}
+*/
+
+
+arrUnsortInt = [19,18,117,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1];
+arrUnsortString = ["z","s","b","a","c","h","o","p","n","c","a","q","f","j","l","k"];
+arrUnsortFloat = [9.2,8.3,7.5,6,13.12,15.3,17.1,11.36,11.57,12.47,15.89,5.11,4.3,3.2,2,1];
+
+function sortfunc(num1,num2){
+    return num1 - num2;
+}
+
+
+console.log("/* INT SORTING*/")
+console.log(`Array sorted with insertionSort   : ${insertion(arrUnsortInt)}`);
+console.log(`Array sorted without sort function: ${arrUnsortInt.sort()}`);
+console.log(`Array sorted with sort function   : ${arrUnsortInt.sort(sortfunc)}`);
+
+console.log("/* FLOAT SORTING*/")
+console.log(`Array sorted with insertionSort   : ${insertion(arrUnsortFloat)}`);
+console.log(`Array sorted without sort function: ${arrUnsortFloat.sort()}`);
+console.log(`Array sorted with sort function   : ${arrUnsortFloat.sort(sortfunc)}`);
+
+console.log("/* STRING SORTING*/")
+console.log(`Array sorted with insertionSort   : ${insertion(arrUnsortString)}`);
+console.log(`Array sorted without sort function: ${arrUnsortString.sort()}`);
+console.log(`Array sorted with sort function   : ${arrUnsortString.sort(sortfunc)}`);

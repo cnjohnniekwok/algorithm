@@ -1,0 +1,38 @@
+function insertion(a){ //simplified Code | insert to sorted position | T: O(n^2) S: O(1)
+    for(var i = 1; i < a.length; i++){
+        let c = a[i];
+        for(var j = i-1; j > -1 && a[j] > c; j--) a[j+1] = a[j];  
+        a[j+1] = c;
+    }
+    return a;
+}
+
+function bubble(a){ //simplified Code | swaping largest to end | T: O(n^2) S: O(1)
+    for(var i = a.length - 1; i > -1; i--){
+        for(var j = 0; j < a.length; j++){
+            if(a[j] > a[j+1]){
+               [a[j],a[j+1]] = [a[j+1],a[j]]
+            }
+        }
+    }
+    return a;
+}
+
+function selection(a){ //simplified Code | save lowest index, sawp with front | T: O(n^2) S: O(1)
+    for(var i = 0; i < a.length; i++){
+        let l = i;
+        for(var j = i+1; j <a.length; j++){
+            if(a[j] < a[i]){
+                l = j;
+            }
+        }      
+        [a[i],a[l]] = [a[l],a[i]];
+    }
+    return a;
+}
+
+arrUnsortInt = [19,18,117,16,15,14,123,12,11,10,9,8,7,6,5,4,3,2,1];
+console.log("/* INT SORTING*/")
+console.log(`Array sorted with insertion : ${insertion(arrUnsortInt)}`);
+console.log(`Array sorted with bubble    : ${bubble(arrUnsortInt)}`);
+console.log(`Array sorted with selection : ${selection(arrUnsortInt)}`);
