@@ -1,0 +1,199 @@
+class Node {
+    constructor(val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class Queue {
+    constructor() {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
+    }
+
+    dequeue() {
+        //unShift
+        if (!this.first)
+            return undefined
+        if (this.first === this.last)
+            this.last = null;
+
+        let current = this.first;
+        this.first = current.next;
+
+        this.size--;
+        return current;
+    }
+
+    enqueue(val) {
+        //push
+        let newNode = new Node(val);
+        if (!this.first) {
+            this.first = newNode;
+            this.last = this.first;
+        } else {
+            this.last.next = newNode;
+            this.last = newNode;
+        }
+
+        this.size++;
+        return this;
+    }
+
+    getSize() {
+        return this.size;
+    }
+    isEmpty(){
+        if(this.size === 0) return true;
+        else return false;
+    }
+}
+
+class BinarySearchTree {
+    // O(log n) worst O(n)
+    constructor() {
+        this.root = null;
+        this.size = 0;
+    }
+
+    insert(val) {
+        //check if this the root.
+        let newNode = new Node(val);
+        console.log(`Insert Start +:${val}:+`);
+        if (!this.root) {
+            //create new Node, return this tree
+            this.root = newNode;
+            this.size++;
+            console.log(`root -: ${val}`);
+        } else {
+            //else make a new node with val
+            let current = this.root;
+            while (true) {
+                // while(true) until return statement hit
+                if (current.val === val) {
+                    //hanlde, insert, or add count, or ignore.
+                    return true
+                    //ignored.
+                }//check if insert value is less then tree node value
+                else if (val < current.val) {
+                    //check if there is no left (reach the end),
+                    if (current.left) {
+                        current = current.left;
+                        console.log(`move left -: ${current.val}`);
+                    }//else insert like link list.
+                    else {
+                        current.left = newNode;
+                        this.size++;
+                        console.log(`added left -: ${val}`);
+                        //reutrn this tree
+                        return this;
+                    }
+                }//check if insert value is greater then tree node value
+                else {
+                    //check if there is no right (reach the end)
+                    if (current.right) {
+                        current = current.right;
+                        console.log(`move right -: ${current.val}`);
+                    } else {
+                        //else insert like link list.
+                        current.right = newNode;
+                        this.size++;
+                        console.log(`added right -: ${val}`);
+                        //reutrn this tree
+                        return this;
+                    }
+                }
+            }
+        }
+    }
+    getSize() {
+        return this.size;
+    }
+
+    getRoot() {
+        return this.root;
+    }
+
+    find(val) {
+        //check if this the root. return false
+        if (!this.root)
+            return undefined;
+        //set starting var of root
+        let current = this.root
+        let found = false;
+        //while there's a current, and not found.
+        while (current && !found) {
+            if (val === current.val)
+                found = true
+                //check if value is less then current value
+                //set current to left node (must be less then)
+            else if (val < current.val)
+                current = current.left;
+                //if value is greater then
+                //set current to right
+            else
+                current = current.right;
+        }
+        //if found return current/ or true 
+        if (found)
+            return current;
+            //else return undefined./ or  false
+        else
+            return undefined;
+    }
+    contains(val) {
+        if (!this.root)
+            return false;
+        //set starting var of root
+        let current = this.root
+        let found = false;
+        while (current && !found) {
+            if (val === current.val)
+                found = true
+            else if (val < current.val)
+                current = current.left;
+            else
+                current = current.right;
+        }
+        if (found)
+            return true;
+        else
+            return false;
+    }
+}
+
+function breadthFirstSearch(root) {
+    //Space Complexity due to queue space for normal case. one sided tree is better to use BFS
+    //create queue and a variable to store the values of nodes visited
+ 
+    //plase the root node in the queue
+  
+   
+    //Loop as long as there is anything in the queue
+ 
+
+    
+        //Dequeue a node from the queue and 
+       
+        //push the value of the node into the variable that stores the nodes
+     
+        //if there's a left or right property on the node, dequeued - add them to the queue.    
+}
+
+let btree = new BinarySearchTree();
+
+btree.insert(50);
+btree.insert(32);
+btree.insert(60);
+btree.insert(29);
+btree.insert(91);
+btree.insert(77);
+btree.insert(75);
+btree.insert(83);
+console.log(`check tree sizes: ${btree.getSize()}`);
+
+console.log(`Find -: ${btree.find(83)} isContained -:${btree.contains(83)}`);
+console.log(`Find -: ${btree.find(50)} isContained -:${btree.contains(50)}`);
+console.log(`Find -: ${btree.find(12)} isContained -:${btree.contains(12)}`);

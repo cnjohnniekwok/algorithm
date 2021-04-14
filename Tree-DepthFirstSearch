@@ -1,0 +1,40 @@
+//normal tree DSF no space needed.
+
+//recursively: 
+    // create var to store the values of node visited
+    // Store the root of BST in a varable call current
+
+
+//Helpers:
+
+//PreOrder --> Maintain serials strucure root is the first node.
+    //Push value of the node to var that stores values
+
+    function travers(node){
+            //Push data first
+            //if node has left, call this function again
+            //if node has right call this function again
+    }
+    travers(this.root); //invoke call this function lor ..
+    return data;
+
+//PostOrder 
+    //Push value of the node to var that stores values
+    function travers(node){          
+            //if node has right call this function again
+            //if node has left, call this function again
+            //Push data last      
+    }
+    travers(this.root); //invoke
+    return data;
+
+//InOrder --> KEEP tree origin order
+    //Push value of the node to var that stores values
+    function travers(node){          
+            //if node has right call this function again
+             //Push data last  
+            //if node has left, call this function again
+            //Push data last      
+    }
+    travers(this.root); //invoke
+    return data;
