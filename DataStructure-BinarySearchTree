@@ -21,10 +21,10 @@ class Queue {
             this.last = null;
 
         let current = this.first;
-        this.first = current.next;
+        this.first = this.first.next;
 
         this.size--;
-        return current;
+        return current.val; // return the value in the node, instead of the node itself;
     }
 
     enqueue(val) {
@@ -61,12 +61,12 @@ class BinarySearchTree {
     insert(val) {
         //check if this the root.
         let newNode = new Node(val);
-        console.log(`Insert Start +:${val}:+`);
+        //console.log(`Insert Start +:${val}:+`);
         if (!this.root) {
             //create new Node, return this tree
             this.root = newNode;
             this.size++;
-            console.log(`root -: ${val}`);
+            //console.log(`root -: ${val}`);
         } else {
             //else make a new node with val
             let current = this.root;
@@ -81,12 +81,12 @@ class BinarySearchTree {
                     //check if there is no left (reach the end),
                     if (current.left) {
                         current = current.left;
-                        console.log(`move left -: ${current.val}`);
+                        //console.log(`move left -: ${current.val}`);
                     }//else insert like link list.
                     else {
                         current.left = newNode;
                         this.size++;
-                        console.log(`added left -: ${val}`);
+                        //console.log(`added left -: ${val}`);
                         //reutrn this tree
                         return this;
                     }
@@ -95,12 +95,12 @@ class BinarySearchTree {
                     //check if there is no right (reach the end)
                     if (current.right) {
                         current = current.right;
-                        console.log(`move right -: ${current.val}`);
+                        //console.log(`move right -: ${current.val}`);
                     } else {
                         //else insert like link list.
                         current.right = newNode;
                         this.size++;
-                        console.log(`added right -: ${val}`);
+                        //console.log(`added right -: ${val}`);
                         //reutrn this tree
                         return this;
                     }
@@ -167,19 +167,25 @@ class BinarySearchTree {
 function breadthFirstSearch(root) {
     //Space Complexity due to queue space for normal case. one sided tree is better to use BFS
     //create queue and a variable to store the values of nodes visited
- 
+    let currentNode   = root;
+    let array_visited = [];
+    let queue         = new Queue();
     //plase the root node in the queue
-  
+    queue.enqueue(currentNode);
    
     //Loop as long as there is anything in the queue
- 
-
+    while(!queue.isEmpty()){
+        currentNode = queue.dequeue();
+        array_visited.push(currentNode.val);
     
         //Dequeue a node from the queue and 
        
         //push the value of the node into the variable that stores the nodes
      
-        //if there's a left or right property on the node, dequeued - add them to the queue.    
+        //if there's a left or right property on the node, dequeued - add them to the queue. 
+    }  
+    
+    return  array_visited
 }
 
 let btree = new BinarySearchTree();
@@ -192,8 +198,10 @@ btree.insert(91);
 btree.insert(77);
 btree.insert(75);
 btree.insert(83);
-console.log(`check tree sizes: ${btree.getSize()}`);
 
+console.log(`Check tree sizes: ${btree.getSize()}`);
 console.log(`Find -: ${btree.find(83)} isContained -:${btree.contains(83)}`);
 console.log(`Find -: ${btree.find(50)} isContained -:${btree.contains(50)}`);
 console.log(`Find -: ${btree.find(12)} isContained -:${btree.contains(12)}`);
+
+breadthFirstSearch(btree.getRoot());
