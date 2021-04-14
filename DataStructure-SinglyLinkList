@@ -55,7 +55,8 @@ class SinglyLinkList{
             this.head = null;
             this.tail = null;
         }
-        return(current);
+        return current.val;  // return the "value" in the node, instead of the node itself;
+                             // the val can hold another object.
     }
 
     shift(){
@@ -69,7 +70,8 @@ class SinglyLinkList{
             this.tail = null;
         }
 
-        return currentHead;
+        return currentHead.val; // return the "value" in the node, instead of the node itself;
+                                // the val can hold another object.
     }
 
     unShift(val){
@@ -89,7 +91,7 @@ class SinglyLinkList{
         return this; //return the updated list
     }
 
-    get(index){
+    getNode(index){
         if(index < 0 || index >= this.length) return null;
         let current = this.head;
         let count = 0;
@@ -100,8 +102,12 @@ class SinglyLinkList{
         return current;
     }
 
+    get(index){
+        return this.getNode(index).val;
+    }
+
     set(index, val){
-        let nodeToSet = this.get(index);
+        let nodeToSet = this.getNode(index);
         if(nodeToSet){
             nodeToSet.val = val;
             return true;
@@ -116,7 +122,7 @@ class SinglyLinkList{
        if(index === 0 )  return this.unShift(val);
        if(index === this.length) return this.push(val);
        
-       var preNode = this.get(index - 1);
+       var preNode = this.getNode(index - 1);
        var nexNode = preNode.next;
        var newNode = new Node(val);
        
@@ -133,8 +139,8 @@ class SinglyLinkList{
         if(index === 0) return this.shift();
         if(index === this.length) return this.pop();
 
-        let remNode = this.get(index);
-        let preNode = this.get(index - 1);
+        let remNode = this.getNode(index);
+        let preNode = this.getNode(index - 1);
 
         console.log(`Remove: ${preNode.val} -> x:${remNode.val}:x ->  ${remNode.next.val}`);
 
@@ -187,23 +193,23 @@ let listLenHalf = listLen/2
 //GET
 console.log(`Get length -: ${list.getLength()}`);
 for(var i = 0; i < listLen ; i++){
-    console.log(`Get -: ${list.get(i).val}`); 
+    console.log(`Get -: ${list.get(i)}`); 
 }
 
 //SET
 for(var i = 0; i < listLen ; i++){
-    console.log(`Set -: ${list.set(i,list.get(i).val.length)}`); 
+    console.log(`Set -: ${list.set(i,list.get(i).length)}`); 
 }
 
 //SHIFT
 console.log(`Get length -: ${list.getLength()}`);
 for(var i = 0; i < listLenHalf ; i++){
-    console.log(`PUSH/POP  -:${list.shift().val}`); 
+    console.log(`PUSH/POP  -:${list.shift()}`); 
 }
 
 //POP
 console.log(`Get length -: ${list.getLength()}`);
 for(var i = 0; i < listLenHalf ; i++){
-    console.log(`UNSH/SHIF -:${list.pop().val}`);
+    console.log(`UNSH/SHIF -:${list.pop()}`);
 }
 console.log(`Get length -: ${list.getLength()}`);

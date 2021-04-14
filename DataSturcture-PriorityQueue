@@ -1,0 +1,101 @@
+class Node{
+    constructor(p,val){
+        this.p   = p;
+        this.val = val;
+    }
+}
+
+class PriorityQueue { //with a min binary heap
+    constructor() {
+        this.values = [];
+    }
+
+    getSize(){
+        return this.values.length;
+    }
+
+    enQueue(p, val) {
+        let newNode = new Node(p, val);
+        //push value to the end
+        this.values.push(newNode);
+        console.log(this.values);
+        //bubble up
+        this.bubbleUp();
+    }
+    bubbleUp() {
+        //most current element index
+        let index = this.values.length - 1;
+        const element = this.values[index];
+
+        //compare find index of parent and compare with it;
+        while (index > 0) {//if not break below, it reaches top, with index 0;
+            let prarentIndex = Math.floor((index - 1) / 2); //<-heart of the bubbleup
+            let parent = this.values[prarentIndex];
+            console.log(`${element.p} ${parent.p}`);
+            if (element.p >= parent.p)
+                break;
+            //if current element is greater, swap
+            this.values[prarentIndex] = element;
+            this.values[index] = parent;           
+            //update index for keep checking up steam.  
+            index = prarentIndex     
+        }
+    }
+
+    deQueue() {
+        const min = this.values[0];
+        const end = this.values.pop();
+        if(this.values.length > 0){
+            this.values[0] = end;
+            this.sinkDown();
+        }
+        return min;
+    }
+    sinkDown(){
+        let idx = 0;
+        const length = this.values.length;
+        const element = this.values[0];
+        while(true){
+            let leftChildIdx = 2 * idx + 1;
+            let rightChildIdx = 2 * idx + 2;
+            let rightChild, leftChild;
+            let swap = null;
+
+            if(leftChildIdx < length){
+                leftChild = this.values[leftChildIdx];
+                if(leftChild.p < element.p){
+                    swap = leftChildIdx;
+                }
+            }
+
+            if(rightChildIdx < length){
+                rightChild = this.values[rightChildIdx];
+                if(
+                    (swap === null && rightChild.p < element.p) || 
+                    (swap !== null && rightChild.p < leftChild.p)
+                ){
+                    swap = rightChildIdx;
+                }
+            }
+
+            if(swap === null) break;
+            this.values[idx] = this.values[swap];
+            this.values[swap] = element;
+            idx = swap;
+        }
+    }
+}
+
+let pQueue = new PriorityQueue();
+pQueue.enQueue(10,"Do it by this month");
+pQueue.enQueue(1,"Do it now!");
+pQueue.enQueue(1,"Do it now!");
+pQueue.enQueue(20,"Do it whenever");
+pQueue.enQueue(2,"Do it asap!");
+pQueue.enQueue(5,"Do it by this week");
+pQueue.enQueue(5,"Do it by this week");
+
+while(pQueue.getSize()){
+    console.log(pQueue.deQueue());
+}
+    

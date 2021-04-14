@@ -21,8 +21,9 @@ class Stack{
 
 
         this.size--;
-        return current;
-    }
+        return current.val; // return the "value" in the node, instead of the node itself;
+                            // the val can hold another object.
+    } 
 
     push(val){ //shift
         let newNode = new Node(val);
@@ -50,8 +51,8 @@ for(var i=5; i > 0; i--){
     console.log(`Push: ${i}`);
 }
 
-console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);
-console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);
-console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);
-console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);
-console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);
+console.log(`Pop: ${stack.pop()} size(${stack.getSize()})`);
+console.log(`Pop: ${stack.pop()} size(${stack.getSize()})`);
+console.log(`Pop: ${stack.pop()} size(${stack.getSize()})`);
+console.log(`Pop: ${stack.pop()} size(${stack.getSize()})`);
+console.log(`Pop: ${stack.pop()} size(${stack.getSize()})`);

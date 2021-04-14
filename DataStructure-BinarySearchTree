@@ -24,7 +24,8 @@ class Queue {
         this.first = this.first.next;
 
         this.size--;
-        return current.val; // return the value in the node, instead of the node itself;
+        return current.val;
+        // return the value in the node, instead of the node itself;
     }
 
     enqueue(val) {
@@ -45,9 +46,11 @@ class Queue {
     getSize() {
         return this.size;
     }
-    isEmpty(){
-        if(this.size === 0) return true;
-        else return false;
+    isEmpty() {
+        if (this.size === 0)
+            return true;
+        else
+            return false;
     }
 }
 
@@ -164,30 +167,6 @@ class BinarySearchTree {
     }
 }
 
-function breadthFirstSearch(root) {
-    //Space Complexity due to queue space for normal case. one sided tree is better to use BFS
-    //create queue and a variable to store the values of nodes visited
-    let currentNode   = root;
-    let array_visited = [];
-    let queue         = new Queue();
-    //plase the root node in the queue
-    queue.enqueue(currentNode);
-   
-    //Loop as long as there is anything in the queue
-    while(!queue.isEmpty()){
-        currentNode = queue.dequeue();
-        array_visited.push(currentNode.val);
-    
-        //Dequeue a node from the queue and 
-       
-        //push the value of the node into the variable that stores the nodes
-     
-        //if there's a left or right property on the node, dequeued - add them to the queue. 
-    }  
-    
-    return  array_visited
-}
-
 let btree = new BinarySearchTree();
 
 btree.insert(50);
@@ -200,8 +179,6 @@ btree.insert(75);
 btree.insert(83);
 
 console.log(`Check tree sizes: ${btree.getSize()}`);
-console.log(`Find -: ${btree.find(83)} isContained -:${btree.contains(83)}`);
-console.log(`Find -: ${btree.find(50)} isContained -:${btree.contains(50)}`);
-console.log(`Find -: ${btree.find(12)} isContained -:${btree.contains(12)}`);
-
-breadthFirstSearch(btree.getRoot());
+console.log(`Find -: 83 : ${btree.find(83)} isContained -:${btree.contains(83)}`);
+console.log(`Find -: 50 : ${btree.find(50)} isContained -:${btree.contains(50)}`);
+console.log(`Find -: 12 : ${btree.find(12)} isContained -:${btree.contains(12)}`);

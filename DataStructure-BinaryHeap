@@ -1,0 +1,98 @@
+class MaxBinaryHeap { //This one is max heap //parent always larger then childrens //return max = sorted
+    constructor() {   //  insert, remove O(log n), search O(n)
+        this.values = []; 
+    }
+
+    insert(val) {
+        //push value to the end
+        this.values.push(val);
+        //bubble up
+        this.bubbleUp();
+    }
+    bubbleUp() {
+        //most current element index
+        let index = this.values.length - 1;
+        const element = this.values[index];
+
+        //compare find index of parent and compare with it;
+        while (index > 0) {//if not break below, it reaches top, with index 0;
+            let prarentIndex = Math.floor((index - 1) / 2); //<-heart of the bubbleup
+            let parent = this.values[prarentIndex];
+            //======================================|
+            // THIS LINE MAKE IT MAX HEAP
+            if (element <= parent)
+            //--------------------------------------|
+                break;
+            //if current element is greater, swap
+            this.values[prarentIndex] = element;
+            this.values[index] = parent;           
+            //update index for keep checking up steam.  
+            index = prarentIndex     
+        }
+    }
+
+    extractMax() {
+        const max = this.values[0];
+        const end = this.values.pop();
+        if(this.values.length > 0){
+            this.values[0] = end;
+            this.sinkDown();
+        }
+        return max;
+    }
+    sinkDown(){
+        let idx = 0;
+        const length = this.values.length;
+        const element = this.values[0];
+        while(true){
+            let leftChildIdx = 2 * idx + 1;
+            let rightChildIdx = 2 * idx + 2;
+            let rightChild, leftChild;
+            let swap = null;
+
+            if(leftChildIdx < length){
+                leftChild = this.values[leftChildIdx];
+                //======================================|
+                // THIS LINE MAKE IT MAX HEAP
+                if(leftChild > element){
+                //--------------------------------------|
+                    swap = leftChildIdx;
+                }
+            }
+
+            if(rightChildIdx < length){
+                rightChild = this.values[rightChildIdx];
+                if(
+                //======================================|
+                // THIS LINE MAKE IT MAX HEAP
+                    (swap === null && rightChild > element) || 
+                    (swap !== null && rightChild > leftChild)
+                //--------------------------------------|
+                ){
+                    swap = rightChildIdx;
+                }
+            }
+
+            if(swap === null) break;
+            this.values[idx] = this.values[swap];
+            this.values[swap] = element;
+            idx = swap;
+        }
+    }
+}
+
+let heap = new MaxBinaryHeap();
+heap.insert(10);
+heap.insert(50);
+console.log(heap.extractMax());
+heap.insert(500);
+heap.insert(90);
+heap.insert(45);
+heap.insert(120);
+heap.insert(15);
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());
+console.log(heap.extractMax());

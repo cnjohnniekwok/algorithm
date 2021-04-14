@@ -1,40 +1,166 @@
-//normal tree DSF no space needed.
+class Node {
+    constructor(val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}
 
-//recursively: 
+class Queue {
+    constructor() {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
+    }
+
+    dq() {
+        if (!this.first)
+            return undefined
+        if (this.first === this.last)
+            this.last = null;
+
+        let current = this.first;
+        this.first = this.first.next;
+
+        this.size--;
+        return current.val;
+    }
+
+    eq(val) {
+        let newNode = new Node(val);
+        if (!this.first) {
+            this.first = newNode;
+            this.last = this.first;
+        } else {
+            this.last.next = newNode;
+            this.last = newNode;
+        }
+
+        this.size++;
+        return this;
+    }
+
+    getSize() {
+        return this.size;
+    }
+    
+    isEmpty() {
+        if (this.size === 0) return true;
+        else return false;
+    }
+}
+
+class BinarySearchTree {
+    constructor() {
+        this.root = null;
+        this.size = 0;
+    }
+
+    insert(val) {
+        let newNode = new Node(val);
+        if (!this.root) {
+            this.root = newNode;
+            this.size++;
+        } else {
+            let current = this.root;
+            while (true) {
+                if (current.val === val) return true
+                else if (val < current.val) {
+                    if (current.left) current = current.left;
+                    else {
+                        current.left = newNode;
+                        this.size++;
+                        return this;
+                    }
+                }
+                else {
+                    if (current.right) current = current.right;
+                    else {
+                        current.right = newNode;
+                        this.size++;
+                        return this;
+                    }
+                }
+            }
+        }
+    }
+    getSize() {
+        return this.size;
+    }
+
+    getRoot() {
+        return this.root;
+    }
+
+    find(val) {      
+        if (!this.root) return undefined;
+        let current = this.root
+        let found = false;
+        while (current && !found) 
+            if (val === current.val) found = true
+            else if (val < current.val) current = current.left;
+            else current = current.right;       
+        if (found) return current;
+        else return undefined;
+    }
+
+    contains(val) {
+        if (!this.root) return false;
+        let current = this.root
+        let found = false;
+        while (current && !found)
+            if (val === current.val) found = true
+            else if (val < current.val) current = current.left;
+            else current = current.right;
+        
+        if (found) return true;
+        else return false;
+    }
+}
+
+function depthFirstSearch(root,style) { //normal tree DSF no space needed.
     // create var to store the values of node visited
     // Store the root of BST in a varable call current
+    let array_visited = [];
+    let current = root;
 
 
-//Helpers:
-
-//PreOrder --> Maintain serials strucure root is the first node.
-    //Push value of the node to var that stores values
-
-    function travers(node){
-            //Push data first
-            //if node has left, call this function again
-            //if node has right call this function again
+    function traversepreOrder(node){
+        array_visited.push(node.val);
+        if(node.left) traversepreOrder(node.left);
+        if(node.right) traversepreOrder(node.right);
     }
-    travers(this.root); //invoke call this function lor ..
-    return data;
 
-//PostOrder 
-    //Push value of the node to var that stores values
-    function travers(node){          
-            //if node has right call this function again
-            //if node has left, call this function again
-            //Push data last      
+    function traversePostOrder(node){       
+        if(node.left) traversePostOrder(node.left);
+        if(node.right) traversePostOrder(node.right);
+        array_visited.push(node.val);
     }
-    travers(this.root); //invoke
-    return data;
 
-//InOrder --> KEEP tree origin order
-    //Push value of the node to var that stores values
-    function travers(node){          
-            //if node has right call this function again
-             //Push data last  
-            //if node has left, call this function again
-            //Push data last      
+    function traverseInOrder(node){      
+        if(node.left) traverseInOrder(node.left);
+        array_visited.push(node.val);
+        if(node.right) traverseInOrder(node.right);
     }
-    travers(this.root); //invoke
-    return data;
+
+    if(style === "pre") traversepreOrder(root);
+    if(style === "post") traversePostOrder(root);
+    if(style === "in") traverseInOrder(root);
+     
+    return array_visited;
+}
+
+let btree = new BinarySearchTree();
+
+btree.insert(50);
+btree.insert(32);
+btree.insert(60);
+btree.insert(29);
+btree.insert(91);
+btree.insert(77);
+btree.insert(75);
+btree.insert(83);
+
+console.log(`PREORDER  ${depthFirstSearch(btree.getRoot(),"pre")}`);
+console.log(`POSTORDER ${depthFirstSearch(btree.getRoot(),"post")}`);
+console.log(`INORDER   ${depthFirstSearch(btree.getRoot(),"in")}`);

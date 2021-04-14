@@ -118,40 +118,75 @@ class BinarySearchTree {
     }
 }
 
-function breadthFirstSearch(root) {
-    //Space Complexity due to queue space for normal case. one sided tree is better to use BFS
-    //create queue and a variable to store the values of nodes visited
-    let currentNode = root;
-    let array_visited = [];
-    let queue = new Queue();
-    //plase the root node in the queue
-    queue.eq(currentNode);
-
-    //Loop as long as there is anything in the queue
-    while (!queue.isEmpty()) {
-        //Dequeue a node from the queue and
-        //push the value of the node into the variable that stores the nodes
-        currentNode = queue.dq();
-        array_visited.push(currentNode.val);
-
-        //if there's a left or right property on the node, dequeued - add them to the queue.
-        if (currentNode.left)
-            queue.eq(currentNode.left)
-        if (currentNode.right)
-            queue.eq(currentNode.right)
+function dfs_pre(root){
+    let n=root;
+    let a=[];
+    function t(n){
+        a.push(n.val);
+        if(n.left) t(n.left);
+        if(n.right) t(n.right);
     }
-    return array_visited
+
+    t(root);
+    return a;
+}
+
+function dfs_pos(root){
+    let n=root;
+    let a=[];
+
+    function t(n){
+        if(n.left) t(n.left);
+        if(n.right) t(n.right);
+        a.push(n.val);
+    }
+    
+    t(root);
+    return a;
+}
+
+function dfs_ino(root){
+    let n=root;
+    let a=[];
+
+    function t(n){
+        if(n.left) t(n.left);
+        a.push(n.val);
+        if(n.right) t(n.right);
+    }
+
+    t(root);
+    return a;    
+}
+
+
+function bfs(root){
+    let q = new Queue;
+    let a = []
+    let n = root;
+    q.eq(n);
+    while(!q.isEmpty()){
+        n = q.dq();
+        a.push(n.val);
+        if(n.left) q.eq(n.left);
+        if(n.right) q.eq(n.right);
+    }
+    return a;
 }
 
 let btree = new BinarySearchTree();
+//============================================================================|
+btree.insert(121);
+btree.insert(88);
+btree.insert(93);
+btree.insert(42);
+btree.insert(56);
+btree.insert(123);
+btree.insert(67);
+btree.insert(48);
+btree.insert(33);
 
-btree.insert(50);
-btree.insert(32);
-btree.insert(60);
-btree.insert(29);
-btree.insert(91);
-btree.insert(77);
-btree.insert(75);
-btree.insert(83);
-
-breadthFirstSearch(btree.getRoot());
+console.log(`BFS     : ${bfs(btree.getRoot())}`);
+console.log(`DFS_pre : ${dfs_pre(btree.getRoot())}`);
+console.log(`DFS_pos : ${dfs_pos(btree.getRoot())}`);
+console.log(`DFS_ino : ${dfs_ino(btree.getRoot())}`);

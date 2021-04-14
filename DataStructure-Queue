@@ -22,7 +22,8 @@ class Queue {
         this.first = current.next;
 
         this.size--;
-        return current;
+        return current.val; // return the "value" in the node, instead of the node itself;
+                            // the val can hold another object.
     }
 
     enqueue(val) { //push
@@ -42,6 +43,11 @@ class Queue {
     getSize() {
         return this.size;
     }
+
+    isEmpty(){
+        if(!this.size()) return true;
+        else return false;
+    }
 }
 
 let queue = new Queue();
@@ -51,8 +57,8 @@ for(var i=5; i > 0; i--){
     console.log(`enqueue: ${i}`);
 }
 
-console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
-console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
-console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
-console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
-console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
+console.log(`dequeue: ${queue.dequeue()} size(${queue.getSize()})`);
+console.log(`dequeue: ${queue.dequeue()} size(${queue.getSize()})`);
+console.log(`dequeue: ${queue.dequeue()} size(${queue.getSize()})`);
+console.log(`dequeue: ${queue.dequeue()} size(${queue.getSize()})`);
+console.log(`dequeue: ${queue.dequeue()} size(${queue.getSize()})`);
