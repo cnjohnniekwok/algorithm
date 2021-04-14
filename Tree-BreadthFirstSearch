@@ -1,0 +1,9 @@
+//create queue and a variable to store the values of nodes visited
+//plase the root node in the queue
+//Loop as long as there is anything in the queue
+    //Dequeue a node from the queue and push the value of the node into the variable that stores the nodes
+    //if there's a left or right property on the node, dequeued - add then to the queue.
+
+function breadthFirstSearch(){ //Space Complexity due to queue space for normal case. one sided tree is better to use BFS
+    
+}

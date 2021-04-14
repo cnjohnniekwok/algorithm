@@ -1,0 +1,57 @@
+//FILO
+class Node{
+    constructor(val){
+        this.val = val;
+        this.next = null;
+    }
+}
+
+class Stack{
+    constructor(){
+        this.first = null;
+        this.last  = null;
+        this.size  = 0;
+    }
+
+    pop(){ //unShift
+        if(!this.first) return undefined;
+        if(this.first === this.last) this.last = null;
+        let current = this.first;
+        this.first = this.first.next;
+
+
+        this.size--;
+        return current;
+    }
+
+    push(val){ //shift
+        let newNode = new Node(val);
+        if(!this.first){
+            this.first = newNode;
+            this.last  = newNode;
+        }
+        else{
+            newNode.next = this.first;
+            this.first = newNode;
+        }
+        this.size++
+        return this;
+    }
+
+    getSize(){
+        return this.size;
+    }
+}
+
+let stack = new Stack();
+
+for(var i=5; i > 0; i--){
+    stack.push(i);
+    console.log(`Push: ${i}`);
+}
+
+console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);
+console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);
+console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);
+console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);
+console.log(`Pop: ${stack.pop().val} size(${stack.getSize()})`);

@@ -1,0 +1,209 @@
+//======================================================|
+//                Singly Linked List
+//
+//------------------------------------------------------|
+class Node{
+    constructor(val){
+        this.val = val;
+        this.next = null;
+    }
+}
+
+class SinglyLinkList{
+    constructor(){
+        this.head = null;
+        this.tail = null;
+        this.length = 0;
+    }
+
+    push(val){
+        let newNode = new Node(val);
+        if(!this.head){
+            this.head = newNode;
+            this.tail = newNode;
+        }
+        else{
+            this.tail.next = newNode;
+            this.tail = newNode;
+        }
+        this.length ++;
+        return this; //return the updated list
+    }
+
+    pop(){
+        if(!this.head) return undefined
+        //set starting point: head, tail 
+        let current = this.head;
+        let newTail = current;
+
+        //travse until next === null
+        while(current.next){
+            newTail = current; //set tail first
+            current = current.next; //this will become null
+        }
+
+        //last node before tail = new tail
+        //update last node.next to null
+        //decreas list length by 1
+        this.tail = newTail;
+        newTail.next = null;
+        this.length --;
+
+        //if list length becomes 0,
+        // set head, tail to null.
+        if(this.length === 0){
+            this.head = null;
+            this.tail = null;
+        }
+        return(current);
+    }
+
+    shift(){
+        if(!this.head) return undefined;
+        
+        let currentHead = this.head
+        this.head = currentHead.next;
+        this.length --
+
+        if(this.length == 0){ // tail will still point to this last element being shifted.
+            this.tail = null;
+        }
+
+        return currentHead;
+    }
+
+    unShift(val){
+        let newNode = new Node(val);
+
+        if(!this.head){
+            this.head = newNode;
+            this.tail = this.head;
+        }
+        else{
+            let currentHead = this.head;
+            this.head = newNode;
+            newNode.next = currentHead;
+        }
+        this.length++
+        
+        return this; //return the updated list
+    }
+
+    get(index){
+        if(index < 0 || index >= this.length) return null;
+        let current = this.head;
+        let count = 0;
+        while(count !== index){
+            current = current.next
+            count ++
+        }
+        return current;
+    }
+
+    set(index, val){
+        let nodeToSet = this.get(index);
+        if(nodeToSet){
+            nodeToSet.val = val;
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    insert(index,val){
+       if(index < 0 || index > this.length) return false;
+       if(index === 0 )  return this.unShift(val);
+       if(index === this.length) return this.push(val);
+       
+       var preNode = this.get(index - 1);
+       var nexNode = preNode.next;
+       var newNode = new Node(val);
+       
+       console.log(`Insert: ${preNode.val} -> +:${newNode.val}:+ ->  ${nexNode.val}`);
+
+       preNode.next = newNode;
+       newNode.next = nexNode;
+       this.length++;
+       return this;
+    }
+
+    remove(index){
+        if(index < 0 || index > this.length) return false;
+        if(index === 0) return this.shift();
+        if(index === this.length) return this.pop();
+
+        let remNode = this.get(index);
+        let preNode = this.get(index - 1);
+
+        console.log(`Remove: ${preNode.val} -> x:${remNode.val}:x ->  ${remNode.next.val}`);
+
+        preNode.next = remNode.next;
+        this.length --;
+        return this;
+    }
+
+    reverse(){
+        
+    }
+
+    getLength(){
+        return this.length;
+    }
+}
+
+//======================================================|
+//  TESTING GROUND
+//------------------------------------------------------|
+//     O(1) UnShift ->
+//          <- Shift O(1) [List] -> Pop O(1)
+//                                 <- Push O(1)
+//                SET([----GET----].val) O(n)
+//------------------------------------------------------|
+let list = new SinglyLinkList();
+
+//PUSH
+list.push("IIIIIIII");          //         [8]
+list.push("IIIIIII");           //         [8] [7]
+list.push("IIIIII");            //         [8] [7] [6]
+
+//UNSHIFT
+list.unShift("III");            //         [3] [8] [7] [6]
+list.unShift("II");             //     [2] [3] [8] [7] [6]
+list.unShift("I");              // [1] [2] [3] [8] [7] [6]
+
+//INSERT
+list.insert(3,"IIII");          // [1] [2] [3] [4] [8] [7] [6]
+list.insert(7,"IIIII");         // [1] [2] [3] [4] [8] [7] [6] [5]
+list.insert(5,"DELETE ME");     // [1] [2] [3] [4] [8] [7] [6] [5]
+
+//REMOVE
+list.remove(5);
+ 
+//GETLENGTH
+let listLen = list.getLength();
+let listLenHalf = listLen/2
+
+//GET
+console.log(`Get length -: ${list.getLength()}`);
+for(var i = 0; i < listLen ; i++){
+    console.log(`Get -: ${list.get(i).val}`); 
+}
+
+//SET
+for(var i = 0; i < listLen ; i++){
+    console.log(`Set -: ${list.set(i,list.get(i).val.length)}`); 
+}
+
+//SHIFT
+console.log(`Get length -: ${list.getLength()}`);
+for(var i = 0; i < listLenHalf ; i++){
+    console.log(`PUSH/POP  -:${list.shift().val}`); 
+}
+
+//POP
+console.log(`Get length -: ${list.getLength()}`);
+for(var i = 0; i < listLenHalf ; i++){
+    console.log(`UNSH/SHIF -:${list.pop().val}`);
+}
+console.log(`Get length -: ${list.getLength()}`);

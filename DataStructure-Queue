@@ -1,0 +1,58 @@
+//FIFO
+class Node {
+
+    constructor(val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+class Queue {
+    constructor() {
+        this.first = null;
+        this.last = null;
+        this.size = 0;
+    }
+
+    dequeue() { //unShift
+        if (!this.first) return undefined
+        if (this.first === this.last) this.last = null;
+
+        let current = this.first;
+        this.first = current.next;
+
+        this.size--;
+        return current;
+    }
+
+    enqueue(val) { //push
+        let newNode = new Node(val);
+        if (!this.first) {
+            this.first = newNode;
+            this.last = this.first;
+        } else {
+            this.last.next = newNode;
+            this.last = newNode;
+        }
+
+        this.size++;
+        return this;
+    }
+
+    getSize() {
+        return this.size;
+    }
+}
+
+let queue = new Queue();
+
+for(var i=5; i > 0; i--){
+    queue.enqueue(i);
+    console.log(`enqueue: ${i}`);
+}
+
+console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
+console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
+console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
+console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
+console.log(`dequeue: ${queue.dequeue().val} size(${queue.getSize()})`);
