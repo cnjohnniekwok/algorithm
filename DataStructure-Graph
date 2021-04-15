@@ -42,15 +42,68 @@ class Graph{
     }
 
     bfs(start){
-
+        let q = [] //queue
+        let visited = {};
+        let result  = [];
+        let adj = this.adjacencyList;
+    
+        q.push(start);
+        visited[start] = true;
+        while(q.length){
+            let v = q.shift();//fifo queue
+            result.push(v);
+            for(let i in adj[v]){
+                let nv = adj[v][i].vertexTo;
+                if(!visited[nv]) {
+                    visited[nv] = true;
+                    q.push(nv);
+                }
+            }
+        }
+        return result;
     }
 
     dfs_r(start){
+        let result = [];
+        let visited = {};
+        let adj = this.adjacencyList;
 
+
+        function dfs(v){ // each vertex.
+            if(!v) return null;          
+            visited[v] = true;
+            result.push(v);                     //          i
+                                                //          |    
+            for(let i in adj[v]){               //adj[v] -> [{vertexTo, weight}]
+                let nv = adj[v][i].vertexTo;
+                if(!visited[nv]) dfs(nv);
+            }
+        }
+
+        dfs(start);
+
+        return result;
     }
 
     dfs_i(start){
+        let adj = this.adjacencyList;
+        let s = [] //stack
+        let visited = {};
+        let result = [];
+        s.push(start);
 
+        while(s.length){
+            let v = s.pop();
+            if(!visited[v]){
+                visited[v] = true;
+                result.push(v);
+                for(let i in adj[v]){
+                    let nv = adj[v][i].vertexTo;
+                    s.push(nv);
+                }
+            }
+        }
+        return result;
     }
 
     dijkstra(start, finish){
@@ -67,18 +120,28 @@ class Graph{
 }
 
 let g = new Graph;
-g.insert("Hong Kong");
-g.insert("Macau");
-g.insert("Tokyo");
-g.insert("London");
-g.insert("Los Angeles");
+g.insert("A");
+g.insert("B");
+g.insert("C");
+g.insert("D");
+g.insert("E");
+g.insert("F");
+g.insert("G");
+
+g.addEdge("A","B",1);
+g.addEdge("B","C",1);
+g.addEdge("C","D",1);
+g.addEdge("D","E",1);
+g.addEdge("D","B",1);
+g.addEdge("E","F",1);
+g.addEdge("F","D",1);
+g.addEdge("F","A",1);
+g.addEdge("F","G",1);
 
 
-g.addEdge("Hong Kong", "Macau");
-g.addEdge("Hong Kong", "London", 10);
-g.addEdge("Hong Kong", "Tokyo",4.5);
-g.addEdge("Hong Kong","Los Angeles",11.5);
-
+console.log(`dfs_r: ${g.dfs_r("B")}`);
+console.log(`dfs_i: ${g.dfs_i("B")}`);
+console.log(`bfs  : ${g.bfs("B")}`);
 // g.removeEdge("Hong Kong","Los Angeles");
 // g.removeEdge("Hong Kong","Tokyo");
 // g.removeVertex("Hong Kong");
