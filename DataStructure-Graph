@@ -9,7 +9,7 @@ class Graph{
     constructor(){
         this.adjacencyList = {};
     }
-    
+
     insert(vertex){
         this.adjacencyList[vertex] = []; //make it weighted or unweighted depencey the Node/val push to the array.
     }
@@ -21,7 +21,7 @@ class Graph{
         let NodeFrom = new Node(vertexFrom,weight)
 
         //for directed graph, one add one direction, this is undirected graph.
-        this.adjacencyList[vertexFrom].push(NodeTo); 
+        this.adjacencyList[vertexFrom].push(NodeTo);
         this.adjacencyList[vertexTo].push(NodeFrom);
     }
 
