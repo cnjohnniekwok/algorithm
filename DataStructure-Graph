@@ -1,0 +1,84 @@
+class Node{
+    constructor(vertexTo,weight=1){
+        this.weight = weight;
+        this.vertexTo = vertexTo;
+    }
+}
+
+class Graph{
+    constructor(){
+        this.adjacencyList = {};
+    }
+    
+    insert(vertex){
+        this.adjacencyList[vertex] = []; //make it weighted or unweighted depencey the Node/val push to the array.
+    }
+
+    addEdge(vertexFrom,vertexTo,weight){
+        //add checking if node already existed.
+        if(!this.adjacencyList[vertexFrom] || !this.adjacencyList[vertexTo]) return false;
+        let NodeTo = new Node(vertexTo,weight)
+        let NodeFrom = new Node(vertexFrom,weight)
+
+        //for directed graph, one add one direction, this is undirected graph.
+        this.adjacencyList[vertexFrom].push(NodeTo); 
+        this.adjacencyList[vertexTo].push(NodeFrom);
+    }
+
+    removeEdge(vertex1,vertex2){
+        this.adjacencyList[vertex1] = this.adjacencyList[vertex1].filter(v => v !== vertex2);
+        this.adjacencyList[vertex2] = this.adjacencyList[vertex2].filter(v => v !== vertex1);
+    }
+
+    removeVertex(vertexRM){
+        let arrV = this.adjacencyList[vertexRM];
+        //loop the array of removal vertex
+        for(var i = 0; i <= arrV.length - 1; i++){
+            //each vertex remove vertexRM in its adjacencyList.
+            this.adjacencyList[arrV[i]] = this.adjacencyList[arrV[i]].filter(v => v !== vertexRM);
+        }
+        //delete the vertex all together.
+        delete this.adjacencyList[vertexRM]
+    }
+
+    bfs(start){
+
+    }
+
+    dfs_r(start){
+
+    }
+
+    dfs_i(start){
+
+    }
+
+    dijkstra(start, finish){
+        //every time we look to visit a new node, we pick the node with the smallest known distance to visit first
+
+        //Once we've moved to the node we're going to visit, we look at each of its neighbors.
+
+        //For each neighboring node, we calculate the distance by summing the total edges that lead to the node  we're checking from the starting node
+
+        //If the new total distance to a node is less then the previous total, we store the new shorter distance for that node.
+
+    }
+
+}
+
+let g = new Graph;
+g.insert("Hong Kong");
+g.insert("Macau");
+g.insert("Tokyo");
+g.insert("London");
+g.insert("Los Angeles");
+
+
+g.addEdge("Hong Kong", "Macau");
+g.addEdge("Hong Kong", "London", 10);
+g.addEdge("Hong Kong", "Tokyo",4.5);
+g.addEdge("Hong Kong","Los Angeles",11.5);
+
+// g.removeEdge("Hong Kong","Los Angeles");
+// g.removeEdge("Hong Kong","Tokyo");
+// g.removeVertex("Hong Kong");
