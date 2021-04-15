@@ -1,0 +1,137 @@
+class Node{
+    constructor(val, p){
+        this.val = val;
+        this.p = p
+    }
+}
+
+function pvt(a,l,r){
+    let p = a[l], s = l;
+    for(var i = l+1; i<=r; i++){
+        if(p.p < a[i].p){ // want a min heap? max heap? change it here!
+            s++;
+            [a[s],a[i]] = [a[i],a[s]];
+        }
+    }
+    [a[l],a[s]] = [a[s],a[l]]
+    return s;
+}
+
+function quick(a,s=0,e=a.length-1){
+    if(s < e){
+        let p = pvt(a,s,e);
+        quick(a,s,p-1);
+        quick(a,p+1,e);
+    }
+    return a;
+}
+
+class Pqueue{
+    constructor(){
+        this.values = []
+    }
+
+    eq(val,p){
+        let n = new Node(val, p)
+        this.values.push(n);
+        quick(this.values);
+    }
+
+    dq(){
+       return this.values.pop(); // sorting manner matters min = desend, max = asend        
+    }
+
+    getSize(){
+        return this.values.length;
+    }
+}
+
+class Graph{
+    constructor(){
+        this.adjlsit = {};
+    }
+
+    addVtx(val){
+        this.adjlsit[val] = [];
+    }
+
+    addEdg(v1,v2,p){
+        if(this.adjlsit[v1] && this.adjlsit[v2]){              
+            let n2 = new Node(v2,p);   
+            this.adjlsit[v1].push(n2);
+            let n1 = new Node(v1,p);   //comment this make it directed.
+            this.adjlsit[v2].push(n1); //comment this make it directed.
+        }       
+    }
+
+    rmEdg(v1,v2){
+        if(this.adjlsit[v1] && this.adjlsit[v2]){
+            this.adjlsit[v1] = this.adjlsit[v1].filter(v => v.val !== v2);
+            this.adjlsit[v2] = this.adjlsit[v2].filter(v => v.val !== v1); //comment this make it directed.
+        }
+    }
+
+    rmVtx(v){
+        if(this.adjlsit[v]){
+           for(let vn in this.adjlsit[v]){
+               this.adjlsit[vn.val].filter(ev => ev.val !== v);
+           }
+           delete this.adjlsit[v];
+        }
+    }
+    
+    dfs_r(s){
+        let graph   = this.adjlsit
+        let path    = [];
+        let visited = {};
+
+        function dfs(v){
+            if(!v) return null;
+            visited[v] = true;
+            path.push(v);
+            graph[v].forEach(rv => {
+                if(!visited[rv.val]) dfs(rv.val);
+            });
+        }
+
+        dfs(s);
+        return path;
+    }
+}
+// //check priorityQueue
+// let q = new Pqueue();
+
+
+// q.eq("A",10);
+// q.eq("B",15);
+// q.eq("C",5);
+// q.eq("D",3);
+// q.eq("E",100);
+// q.eq("F",1);
+
+
+//build priorityQueue
+let g = new Graph();
+
+g.addVtx("A");
+g.addVtx("B");
+g.addVtx("C");
+g.addVtx("D");
+g.addVtx("E");
+g.addVtx("F");
+
+g.addEdg("A","B", 4);
+g.addEdg("A","C", 2);
+g.addEdg("B","E", 3);
+g.addEdg("C","D", 2);
+g.addEdg("C","F", 4);
+g.addEdg("D","E", 3);
+g.addEdg("D","F", 1);
+g.addEdg("E","F", 1);
+g.addEdg("F","A", 1);
+
+console.log(g.dfs_r("F"));
+
+// // g.rmEdg("A","B");
+// // g.rmVtx("A");
+
