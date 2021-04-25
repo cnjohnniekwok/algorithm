@@ -1,0 +1,99 @@
+function pirvot(a,l,r){
+    let p = a[l];
+    let s = l;
+    for(var i = l+1; i <=r; i++){
+        if(p.p < a[i].p){
+            s++;
+            [a[i],a[s]] = [a[s],a[i]];
+        }
+    }
+    [a[s],a[l]] = [a[l],a[s]];
+
+    return s;
+}
+
+function merge(a1,a2){
+    let a = [];
+    let i=0;j=0;
+
+    while(i <= a1.length-1 && j <= a2.length-1){
+        if(a1[i].p > a2[j].p){
+            a.push(a1[i]);
+            i++;
+        }
+        else{
+            a.push(a2[j]);
+            j++;
+        }
+    }
+
+    while(i <= a1.length-1){
+        a.push(a1[i]);
+        i++;
+    }
+
+    while(j <= a2.length-1){
+        a.push(a2[j]);
+        j++;
+    }
+
+    console.log(a);
+    return a;
+}
+
+function mergeSort(a){
+    if(a.length <= 1) return a;
+    else{
+        let m = Math.floor(a.length/2);
+        let l = mergeSort(a.slice(0,m));
+        let r = mergeSort(a.slice(m));
+        return merge(l,r);
+    }
+}
+
+function quick(a,s=0,e=a.length-1){
+    if( s < e ){
+        let p = pirvot(a,s,e);
+        quick(a,s,p-1);
+        quick(a,p+1,e);
+    }
+    return a;
+}
+
+class Node{
+    constructor(v,p){
+        this.v = v;
+        this.p = p;
+    }
+}
+
+class pQueue{
+    constructor(){
+        this.q = [];
+    }
+
+    eq(v,p){
+        let n = new Node(v,p);
+        this.q.push(n); 
+        //this.q = mergeSort(this.q);     
+        quick(this.q)
+        return this.q;
+    }
+
+    dq(){
+        return this.q.pop();
+    }
+
+    getSize(){
+        return this.q.length;
+    }
+}
+
+
+let pq = new pQueue();
+pq.eq("A",10);
+pq.eq("B",1);
+pq.eq("C",3);
+pq.eq("D",20);
+
+console.log(pq)
