@@ -32,7 +32,7 @@ class SinglyLinkList{
 
     pop(){
         if(!this.head) return undefined
-        //set starting point: head, tail 
+        //set starting point: head, tail
         let current = this.head;
         let newTail = current;
 
@@ -61,7 +61,7 @@ class SinglyLinkList{
 
     shift(){
         if(!this.head) return undefined;
-        
+
         let currentHead = this.head
         this.head = currentHead.next;
         this.length --
@@ -87,7 +87,7 @@ class SinglyLinkList{
             newNode.next = currentHead;
         }
         this.length++
-        
+
         return this; //return the updated list
     }
 
@@ -116,16 +116,16 @@ class SinglyLinkList{
             return false;
         }
     }
-    
+
     insert(index,val){
        if(index < 0 || index > this.length) return false;
        if(index === 0 )  return this.unShift(val);
        if(index === this.length) return this.push(val);
-       
+
        var preNode = this.getNode(index - 1);
        var nexNode = preNode.next;
        var newNode = new Node(val);
-       
+
        console.log(`Insert: ${preNode.val} -> +:${newNode.val}:+ ->  ${nexNode.val}`);
 
        preNode.next = newNode;
@@ -149,8 +149,44 @@ class SinglyLinkList{
         return this;
     }
 
-    reverse(){
-        
+    reverse_with_head_tail(){
+      var node = this.head;
+      this.head = this.tail;
+      this.tail = node;
+      var next;
+      var prev = null;
+      for(var i = 0; i < this.length; i++){
+        next = node.next;
+        node.next = prev;
+        prev = node;
+        node = next;
+      }
+      return this;
+    }
+
+    reverse_with_head_only(){
+        let current = this.head;
+        this.head = this.tail // we dont need this, but keep it for completeness
+        let nextNode;
+        let prevNode = null;
+        while(current.next != null){
+            nextNode = current.next     //save inorder node for iteration.
+            current.next = prevNode;    //if this is first one become tail.
+            prevNode = current;         //store current node for next node to point back.
+            current = nextNode;         //iterate.
+        }
+        current.next = prevNode;        //reaches tail -> become head.
+        this.head = current;
+    }
+
+    print(){
+        var arr = [];
+        var current = this.head
+        while(current){
+            arr.push(current.val)
+            current = current.next
+        }
+        console.log(arr);
     }
 
     getLength(){
@@ -185,7 +221,7 @@ list.insert(5,"DELETE ME");     // [1] [2] [3] [4] [8] [7] [6] [5]
 
 //REMOVE
 list.remove(5);
- 
+
 //GETLENGTH
 let listLen = list.getLength();
 let listLenHalf = listLen/2
@@ -193,23 +229,31 @@ let listLenHalf = listLen/2
 //GET
 console.log(`Get length -: ${list.getLength()}`);
 for(var i = 0; i < listLen ; i++){
-    console.log(`Get -: ${list.get(i)}`); 
+    console.log(`Get -: ${list.get(i)}`);
 }
 
 //SET
 for(var i = 0; i < listLen ; i++){
-    console.log(`Set -: ${list.set(i,list.get(i).length)}`); 
+    console.log(`Set -: ${list.set(i,list.get(i).length)}`);
 }
 
-//SHIFT
-console.log(`Get length -: ${list.getLength()}`);
-for(var i = 0; i < listLenHalf ; i++){
-    console.log(`PUSH/POP  -:${list.shift()}`); 
-}
+console.log("-----");
+list.print()
+list.reverse_with_head_tail()
+list.print()
+list.reverse_with_head_only()
+list.print()
+console.log("-----");
 
-//POP
-console.log(`Get length -: ${list.getLength()}`);
-for(var i = 0; i < listLenHalf ; i++){
-    console.log(`UNSH/SHIF -:${list.pop()}`);
-}
-console.log(`Get length -: ${list.getLength()}`);
+// //SHIFT
+// console.log(`Get length -: ${list.getLength()}`);
+// for(var i = 0; i < listLenHalf ; i++){
+//     console.log(`PUSH/POP  -:${list.shift()}`);
+// }
+
+// //POP
+// console.log(`Get length -: ${list.getLength()}`);
+// for(var i = 0; i < listLenHalf ; i++){
+//     console.log(`UNSH/SHIF -:${list.pop()}`);
+// }
+// console.log(`Get length -: ${list.getLength()}`);
