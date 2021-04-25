@@ -164,7 +164,7 @@ class SinglyLinkList{
       return this;
     }
 
-    reverse_with_head_only(){ //new
+    reverse_with_head_only(){ //new more
         let current = this.head;
         this.head = this.tail // we dont need this, but keep it for completeness
         let nextNode;
