@@ -1,0 +1,47 @@
+function walk(tree,node){
+    if(node > tree.length-1) return 0
+
+    let left = walk(tree,(2*node)+1);
+    let right = walk(tree,(2*node)+2);
+
+    let currVal = tree[node]
+    if(tree[node] < 0) currVal = 0;
+    if(left < 0) left = 0;
+    if(right < 0)right = 0;
+
+    return currVal + left + right;
+
+}
+
+function compareLeftRight(tree){
+    if(tree.length < 2) return "NaN";
+
+    let leftTreeSum = walk(tree,1);
+    let rightTreeSum = walk(tree,2);
+
+    if(leftTreeSum > rightTreeSum) return "Left";
+    else if(leftTreeSum < rightTreeSum) return "Right";
+    else return "Same";
+
+}
+
+let tree;
+
+console.log("Left greater than Right")
+tree = [0,1,2,6,5,4,3,7,8,9,10,11,12]
+console.log(compareLeftRight(tree));
+console.log("Left less than  Right")
+tree = [0,1,2,6,5,4,3,7,-1,9,-1,11,12]
+console.log(compareLeftRight(tree));
+console.log("Left equal to Right")
+tree = [0,1,2,6,5,4,3,7,-1,9,-1,11,8]
+console.log(compareLeftRight(tree));
+console.log("No node:")
+tree = [0]
+console.log(compareLeftRight(tree));
+console.log("Only one node (left):")
+tree = [0,1]
+console.log(compareLeftRight(tree));
+console.log("Only one node (right):")
+tree = [0,-1,1]
+console.log(compareLeftRight(tree));
